@@ -39,7 +39,16 @@
   code{font-family:var(--mono);font-size:.9em;color:var(--warn)}
 
   /* ── 첫 화면 ── */
-  header{padding:54px 0 0}
+  header{padding:30px 0 0}
+  /* 첫 화면은 가운데 정렬 — 형제 제품(homebutler.dev)과 같은 골격이다.
+     마스코트가 제목 위에 크게 오고, 그 아래로 눈썹·제목·설명·단추가 내려간다. */
+  .hero{text-align:center;padding:26px 0 0;position:relative}
+  .hero::before{content:"";position:absolute;left:50%;top:-40px;transform:translateX(-50%);
+       width:620px;height:420px;pointer-events:none;
+       background:radial-gradient(ellipse at center,#4fb3a51f,transparent 65%)}
+  .hero .mascot{width:186px;display:block;margin:0 auto 26px;position:relative}
+  .hero .lede{margin-left:auto;margin-right:auto}
+  .hero .cta{justify-content:center}
   .brand{display:flex;align-items:center;gap:12px;margin-bottom:34px}
   .brand img{width:36px;height:36px}
   .brand b{font-size:17px;font-weight:700;letter-spacing:-.01em}
@@ -101,17 +110,20 @@
     </nav>
   </div>
 
-  <div class="eyebrow">macOS · SSH · SFTP · Serial</div>
-  <h1>Three of them.<br><em>One window.</em></h1>
-  <p class="lede">Most SSH clients make you choose: a terminal that cannot move files, or a
-    file manager that cannot give you a shell. And none of them speak to the USB-serial
-    adapter on your desk.</p>
+  <div class="hero">
+    <img class="mascot" src="images/mascot.png" alt="">
+    <div class="eyebrow">macOS · SSH · SFTP · Serial</div>
+    <h1>Three of them.<br><em>One window.</em></h1>
+    <p class="lede">Most SSH clients make you choose: a terminal that cannot move files, or a
+      file manager that cannot give you a shell. And none of them speak to the USB-serial
+      adapter on your desk.</p>
 
-  <div class="cta">
-    <a class="btn" href="https://github.com/Higangssh/portbutler-releases/releases/latest">↓ Download</a>
-    <a class="btn ghost" href="#pricing">$29 one-time · 14-day trial</a>
+    <div class="cta">
+      <a class="btn" href="https://github.com/Higangssh/portbutler-releases/releases/latest">↓ Download</a>
+      <a class="btn ghost" href="#pricing">$29 one-time · 14-day trial</a>
+    </div>
+    <div class="meta">macOS 13+ · Apple silicon and Intel · Notarized by Apple · Not on the Mac App Store</div>
   </div>
-  <div class="meta">macOS 13+ · Apple silicon and Intel · Notarized by Apple · Not on the Mac App Store</div>
 
   <figure>
     <img src="images/hero.png" alt="Sessions, two file panes and a terminal in one PortButler window">
