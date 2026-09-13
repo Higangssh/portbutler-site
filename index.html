@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PortButler — Native SSH, SFTP and serial for macOS</title>
+<meta name="description" content="One window for SSH, SFTP and serial on macOS. Measurably faster file transfer, error messages that say what to check, and an auth policy that will not lock you out. $29 one-time.">
+<link rel="icon" href="images/icon.png">
+<meta property="og:title" content="PortButler — Native SSH, SFTP and serial for macOS">
+<meta property="og:description" content="One window for SSH, SFTP and serial. 108 MB/s where scp gets 74. $29 one-time.">
+<meta property="og:image" content="https://portbutler.sshlab.dev/images/hero.png">
+<meta property="og:url" content="https://portbutler.sshlab.dev/">
+<meta name="twitter:card" content="summary_large_image">
+<style>
+  :root{
+    --bg:#0f1418; --panel:#151c22; --line:#ffffff14;
+    --ink:#e9eef3; --dim:#9aa9b6; --faint:#6b7b89;
+    --accent:#4fb3a5; --accent-ink:#06211d; --warn:#ffd66b;
+    --mono:"SF Mono",ui-monospace,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);
+       font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+       -webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+  section{padding:76px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border:0}
+
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+           color:var(--accent);margin-bottom:14px}
+  h1{font-size:clamp(30px,5.2vw,50px);line-height:1.1;letter-spacing:-.025em;font-weight:750}
+  h1 em{font-style:normal;color:var(--accent)}
+  h2{font-size:clamp(22px,3.4vw,30px);line-height:1.2;letter-spacing:-.02em;font-weight:700}
+  h3{font-size:17px;font-weight:650;margin-bottom:4px}
+  .lede{font-size:clamp(15px,2vw,18px);color:var(--dim);max-width:44em;margin-top:16px}
+  p{color:var(--dim);margin-top:14px;max-width:44em}
+  p strong{color:var(--ink);font-weight:650}
+  code{font-family:var(--mono);font-size:.9em;color:var(--warn)}
+
+  /* ── 첫 화면 ── */
+  header{padding:54px 0 0}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:34px}
+  .brand img{width:36px;height:36px}
+  .brand b{font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .brand nav{margin-left:auto;display:flex;gap:22px;font-size:14px}
+  .brand nav a{color:var(--dim);text-decoration:none}
+  .brand nav a:hover{color:var(--ink)}
+
+  .cta{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:30px}
+  .btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 22px;
+       border-radius:10px;background:var(--accent);color:var(--accent-ink);
+       font-size:15px;font-weight:650;text-decoration:none}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent;border:1px solid #33424e;color:var(--dim)}
+  .meta{font-size:13px;color:var(--faint);margin-top:14px}
+
+  /* ── 그림·영상 자리 ── */
+  figure{margin:34px 0 0}
+  figure img,figure video{width:100%;display:block;border-radius:12px;
+       border:1px solid var(--line);background:var(--panel)}
+  figcaption{font-size:13px;color:var(--faint);margin-top:11px;text-align:center}
+
+  /* ── 표 ── */
+  table{width:100%;border-collapse:collapse;margin-top:22px;font-size:14.5px}
+  th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;
+        color:var(--dim);vertical-align:top}
+  th{color:var(--ink);font-weight:650;font-size:13px;letter-spacing:.01em}
+  td.me{color:var(--ink);font-weight:650}
+  td.win{color:var(--accent);font-weight:650}
+  td.no{color:var(--warn)}
+  .num{font-family:var(--mono);font-size:13.5px}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:30px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px}
+  .card p{margin-top:8px;font-size:14.5px}
+
+  .price{display:flex;align-items:baseline;gap:12px;margin-top:8px}
+  .price b{font-size:42px;font-weight:750;letter-spacing:-.03em;color:var(--ink)}
+  .price span{color:var(--dim)}
+
+  footer{padding:44px 0 66px;color:var(--faint);font-size:13.5px}
+  footer a{color:var(--dim)}
+  .center{text-align:center}
+  .center p{margin-left:auto;margin-right:auto}
+  @media(max-width:720px){ .grid{grid-template-columns:1fr} section{padding:56px 0} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <div class="brand">
+    <img src="images/icon.png" alt="">
+    <b>PortButler</b>
+    <nav>
+      <a href="#speed">Speed</a>
+      <a href="#why">Why it failed</a>
+      <a href="#fleet">Fleets</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+  </div>
+
+  <div class="eyebrow">macOS · SSH · SFTP · Serial</div>
+  <h1>Three of them.<br><em>One window.</em></h1>
+  <p class="lede">Most SSH clients make you choose: a terminal that cannot move files, or a
+    file manager that cannot give you a shell. And none of them speak to the USB-serial
+    adapter on your desk.</p>
+
+  <div class="cta">
+    <a class="btn" href="https://github.com/Higangssh/portbutler-releases/releases/latest">↓ Download</a>
+    <a class="btn ghost" href="#pricing">$29 one-time · 14-day trial</a>
+  </div>
+  <div class="meta">macOS 13+ · Apple silicon and Intel · Notarized by Apple · Not on the Mac App Store</div>
+
+  <figure>
+    <img src="images/hero.png" alt="Sessions, two file panes and a terminal in one PortButler window">
+    <figcaption>Pick a host on the left and it opens as a tab in this window.
+      Five machines means five tabs — not five windows.</figcaption>
+  </figure>
+</header>
+</div>
+
+<section id="speed"><div class="wrap">
+  <div class="eyebrow">Measured, not quoted</div>
+  <h2>108 MB/s, where <code>scp</code> gets 74.</h2>
+  <p>Same Mac, same server, same 64 MB file. The reason is not micro-optimisation — it is the
+    shape of the transfer. <code>scp</code> waits for each 32 KiB chunk to be acknowledged
+    before asking for the next. PortButler keeps four streams in flight and writes each
+    256 KiB chunk in place.</p>
+
+  <table>
+    <tr><th></th><th>Raspberry Pi 5 over 1GbE</th><th>Same machine (no wire limit)</th></tr>
+    <tr><td class="me">PortButler</td><td class="win num">108 MB/s</td><td class="win num">465 MB/s</td></tr>
+    <tr><td>scp</td><td class="num">74 MB/s</td><td class="num">267 MB/s</td></tr>
+    <tr><td>sftp</td><td class="num">74 MB/s</td><td class="num">267 MB/s</td></tr>
+  </table>
+
+  <p><strong>The number is on screen while it runs.</strong> Megabytes per second and the time
+    left, in the same units as the table — so you are not asked to take this page's word for it.</p>
+
+  <figure>
+    <img src="images/feat-xfer.png" alt="A transfer in progress showing megabytes per second and the time left">
+  </figure>
+
+  <p>That 108 MB/s is 91% of the theoretical maximum of a gigabit wire. There is no room left
+    to win on that cable, which is why the same-machine column exists. Every number here was
+    measured on one Mac, and the method is published —
+    <a href="https://github.com/Higangssh/portbutler-releases/blob/main/docs/BENCHMARK.ko.md"
+       style="color:var(--accent)">BENCHMARK</a> <em style="color:var(--faint)">(Korean)</em>.</p>
+</div></section>
+
+<section id="why"><div class="wrap">
+  <div class="eyebrow">When it goes wrong</div>
+  <h2>It tells you <em style="font-style:italic;color:var(--accent)">why</em> it failed.</h2>
+  <p><code>connection failed</code> is not an error message. These five look identical on most
+    clients and each needs a completely different fix.</p>
+
+  <table>
+    <tr><th style="width:34%">What happened</th><th>What PortButler tells you</th></tr>
+    <tr><td class="me">The port refused it</td><td>The machine is up. Check the port — many devices use 2222</td></tr>
+    <tr><td class="me">Nothing answered</td><td>Powered off, or a firewall dropping packets silently</td></tr>
+    <tr><td class="me">The name will not resolve</td><td>Check spelling, or whether it only exists on a VPN</td></tr>
+    <tr><td class="me">Connected, no SSH greeting</td><td>That port is not SSH, or <code>sshd</code> is stuck</td></tr>
+    <tr><td class="me">Something answered, not SSH</td><td>A web server may be sitting on that port</td></tr>
+  </table>
+</div></section>
+
+<section id="fleet"><div class="wrap">
+  <div class="eyebrow">Built for fleets</div>
+  <h2>Five thousand boards, one password.</h2>
+  <p>That is what an embedded rollout looks like: the same account and the same password on
+    every unit. Save it once as a <strong>credential</strong> and type an address — the login
+    comes from there. Change the password later and every machine follows, because they point
+    at the credential, not a copy of it.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h3>The password never appears</h3>
+      <p>The list shows names and accounts. The password lives in this Mac's Keychain, is read
+        the instant you press Return, and goes straight to the session — it is not rendered,
+        and it never leaves this device.</p>
+    </div>
+    <div class="card">
+      <h3>It will not lock you out</h3>
+      <p>Servers count failed logins. Most clients offer every key in your agent and get cut off
+        before you are ever asked for a password. PortButler offers <strong>at most four</strong>,
+        so an attempt is always left — and when the credential says password, it offers none.</p>
+    </div>
+  </div>
+
+  <figure>
+    <img src="images/feat-cred.png" alt="Answering a sudo password prompt from a saved credential">
+    <figcaption>A password prompt appears, the list opens over it, type to filter, Return to send.</figcaption>
+  </figure>
+</div></section>
+
+<section id="honest"><div class="wrap">
+  <div class="eyebrow">Before you buy</div>
+  <h2>What it does not do.</h2>
+  <p>Listed first, because you will find out anyway and it is better you find out here.</p>
+
+  <table>
+    <tr><th style="width:40%"></th><th>PortButler</th><th>Where it exists</th></tr>
+    <tr><td class="me">Saved command snippets</td><td class="no">Not yet</td><td>Termius, WindTerm</td></tr>
+    <tr><td class="me">Folder transfer, resume, queue</td><td class="no">Not yet</td><td>Transmit, ForkLift</td></tr>
+    <tr><td class="me">Same input to many sessions</td><td class="no">Not yet</td><td>SecureCRT, iTerm</td></tr>
+    <tr><td class="me">Split panes</td><td class="no">Tabs only</td><td>iTerm, WindTerm</td></tr>
+    <tr><td class="me">Serial in the same window</td><td class="win">Yes</td><td class="no">No SSH client does this</td></tr>
+  </table>
+
+  <p>It reads <code>~/.ssh/known_hosts</code> and uses <code>ssh-agent</code> and the keys you
+    already have. It imports <code>~/.ssh/config</code> when you ask it to, and
+    <strong>never writes to that file</strong>.</p>
+</div></section>
+
+<section id="pricing" class="center"><div class="wrap">
+  <div class="eyebrow">Pricing</div>
+  <h2>Try it for 14 days.</h2>
+  <div class="price" style="justify-content:center">
+    <b>$29</b><span>one-time · not a subscription</span>
+  </div>
+  <p>When the trial ends it stops connecting — <strong>your session list stays</strong>.
+    Major upgrades are $15. A ten-seat pack is $240.</p>
+  <div class="cta" style="justify-content:center">
+    <a class="btn" href="https://github.com/Higangssh/portbutler-releases/releases/latest">↓ Download</a>
+  </div>
+  <div class="meta">macOS 13+ · Apple silicon and Intel · Notarized · Direct download, not the Mac App Store</div>
+</div></section>
+
+<footer><div class="wrap center">
+  <img src="images/mascot.png" alt="" style="width:72px;opacity:.85">
+  <p style="margin-top:10px">
+    <a href="https://github.com/Higangssh/portbutler-releases">Releases</a> ·
+    <a href="https://github.com/Higangssh/portbutler-releases/issues">Report an issue</a> ·
+    <a href="https://github.com/Higangssh/portbutler-releases/blob/main/docs/COMPARISON.ko.md">Comparison</a>
+  </p>
+  <p style="margin-top:6px;color:var(--faint)">Not on the Mac App Store — sandboxing blocks
+    writing <code>known_hosts</code>, and without that there is no host key verification.</p>
+</div></footer>
+
+</body>
+</html>
