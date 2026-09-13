@@ -1,49 +1,23 @@
 # portbutler.sshlab.dev
 
-PortButler의 랜딩페이지. **정적 파일만 있고 빌드 단계가 없다.**
+The landing page for **PortButler** — native SSH, SFTP and serial for macOS,
+in one window.
 
-## 배포
+→ **[portbutler.sshlab.dev](https://portbutler.sshlab.dev)**
+→ [Download](https://github.com/Higangssh/portbutler-releases/releases/latest)
+· [Releases and update feed](https://github.com/Higangssh/portbutler-releases)
 
-**Cloudflare Workers**(Pages 아님)가 이 저장소의 `main`을 본다. 형제 사이트
-`homebutler-site`와 같은 방식이다.
+## This repository
+
+Static files, no build step. `public/` is served by a Cloudflare Worker; a push
+to `main` deploys it.
 
 ```
-빌드 명령       (없음)
-배포 명령       npx wrangler deploy
-올리는 폴더     public/
-커스텀 도메인   portbutler.sshlab.dev
+public/index.html    the page
+public/images/       screenshots, icon, mascot
+wrangler.jsonc       deployment config
 ```
 
-설정은 `wrangler.jsonc` 한 장이고 실행할 코드가 없다(`main` 없음).
-
-**`public/`에는 올릴 것만 둔다.** 루트를 가리키면 `.git`과 설정 파일까지 후보가
-되고, 제외 목록을 한 번 빠뜨리면 저장소가 통째로 공개된다. 폴더를 나누면 그
-실수가 아예 불가능하다.
-
-## 왜 릴리스 저장소와 나눴나
-
-`portbutler-releases`는 **DMG·zip·`appcast.xml`·홍보 README만** 담기로 되어 있고,
-앱이 그 저장소의 `appcast.xml`을 직접 읽는다. **업데이트 배관이 걸린 곳에 사이트
-빌드와 디자인 커밋을 섞지 않는다.** 그 저장소의 커밋은 잠재 고객이 읽는 릴리스
-기록이어야 한다.
-
-## 이미지
-
-`images/`의 화면 그림은 **여기서 만들지 않는다.** 비공개 저장소
-`portbutler/docs/release/assets/`가 원본이고, 거기서 구워 복사해 온다. 어디까지가
-실측이고 어디부터가 손으로 그린 것인지는 그쪽 `README.md`와 각 PNG 옆의
-`.meta.json`에 있다.
-
-**둘레가 투명하다** — 어두운 페이지 위에 얹히므로 회색 여백을 넣지 않는다.
-공개 README용 그림과 이 점만 다르다.
-
-## 수치
-
-페이지의 모든 숫자는 `portbutler/docs/BENCHMARK.md`에서 온다. **고칠 때는 그 문서를
-먼저 고칠 것** — 홍보 문구가 근거보다 앞서가면 되돌릴 수 없다.
-
-## 아직 없는 것
-
-첫 화면의 그림은 **정지 화면**이다. 원래 자리는 12초짜리 무음 반복 영상이고,
-전송 속도가 움직이는 것이 이 제품의 1번 차별점을 증명하는 유일한 방법이다.
-실기기(Pi 5)로 찍어야 표와 같은 `108 MB/s`가 나온다.
+Found a problem with the app?
+[Open an issue](https://github.com/Higangssh/portbutler-releases/issues/new)
+on the releases repository.
