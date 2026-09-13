@@ -4,15 +4,21 @@ PortButler의 랜딩페이지. **정적 파일만 있고 빌드 단계가 없다
 
 ## 배포
 
-Cloudflare Pages가 이 저장소의 `main`을 본다.
+**Cloudflare Workers**(Pages 아님)가 이 저장소의 `main`을 본다. 형제 사이트
+`homebutler-site`와 같은 방식이다.
 
 ```
 빌드 명령       (없음)
-출력 디렉터리   /  (루트)
+배포 명령       npx wrangler deploy
+올리는 폴더     public/
 커스텀 도메인   portbutler.sshlab.dev
 ```
 
-푸시하면 자동으로 올라간다.
+설정은 `wrangler.jsonc` 한 장이고 실행할 코드가 없다(`main` 없음).
+
+**`public/`에는 올릴 것만 둔다.** 루트를 가리키면 `.git`과 설정 파일까지 후보가
+되고, 제외 목록을 한 번 빠뜨리면 저장소가 통째로 공개된다. 폴더를 나누면 그
+실수가 아예 불가능하다.
 
 ## 왜 릴리스 저장소와 나눴나
 

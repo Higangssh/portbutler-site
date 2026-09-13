@@ -1,0 +1,14 @@
+{
+  // 정적 파일만 올리는 Worker다. 실행할 코드가 없으므로 main 이 없다.
+  // 형제 사이트(homebutler-site)와 같은 방식이다 — Pages 가 아니라 Workers.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "portbutler-site",
+  "compatibility_date": "2026-09-13",
+  "assets": {
+    // **올릴 것만 이 폴더에 있다.** 루트를 가리키면 .git 과 설정 파일까지
+    // 후보가 되고, 빠뜨리면 저장소가 통째로 공개된다.
+    "directory": "./public",
+    // 없는 주소는 첫 화면으로 보낸다. 한 장짜리라 404 를 따로 둘 이유가 없다.
+    "not_found_handling": "single-page-application"
+  }
+}
