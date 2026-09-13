@@ -1,0 +1,68 @@
+<meta charset="utf-8">
+<title>Thank you — PortButler</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="icon" href="../images/icon.png">
+<style>
+  /* 색은 첫 화면(index.html)과 같은 값이다. 결제가 끝나고 우리 쪽으로 돌아온
+     사람이 다른 사이트에 온 것처럼 보이면 안 된다. */
+  :root{
+    --bg:#0f1418; --panel:#151c22; --line:#ffffff14;
+    --ink:#e9eef3; --dim:#9aa9b6; --faint:#6b7b89;
+    --accent:#4fb3a5; --accent-ink:#06211d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);
+       font:16px/1.6 -apple-system,"SF Pro Text",system-ui,"Helvetica Neue",sans-serif;
+       -webkit-font-smoothing:antialiased}
+  .wrap{max-width:600px;margin:0 auto;padding:64px 24px 96px}
+  .mascot{width:120px;display:block;margin:0 auto 26px}
+  h1{font-size:30px;line-height:1.2;letter-spacing:-.02em;text-align:center}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lede{color:var(--dim);text-align:center;margin-top:14px}
+
+  /* 「무엇을 기다리면 되는가」가 이 쪽의 전부다. 돈을 낸 직후에 아무것도
+     안 일어나면 사람은 실패했다고 여기고 메일을 쓴다. */
+  ol{list-style:none;counter-reset:s;margin:38px 0 0}
+  ol li{counter-increment:s;position:relative;padding:0 0 22px 46px}
+  ol li::before{content:counter(s);position:absolute;left:0;top:-1px;
+       width:28px;height:28px;border-radius:50%;background:var(--panel);
+       border:1px solid var(--line);color:var(--accent);
+       font-size:13px;font-weight:700;display:grid;place-items:center}
+  ol b{color:var(--ink)}
+  ol span{color:var(--dim);display:block;font-size:14.5px;margin-top:2px}
+
+  .note{margin-top:14px;padding:18px 20px;border:1px solid var(--line);
+        border-radius:12px;background:var(--panel);font-size:14.5px;color:var(--dim)}
+  .note b{color:var(--ink)}
+  .note a{color:var(--accent)}
+  .foot{margin-top:34px;text-align:center;font-size:14px;color:var(--faint)}
+  .foot a{color:var(--dim)}
+  code{font:13.5px ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--ink)}
+</style>
+
+<div class="wrap">
+  <img class="mascot" src="../images/mascot.png" alt="">
+  <h1>Thank you. <em>Your licence is on its way.</em></h1>
+  <p class="lede">Nothing else is needed from you right now.</p>
+
+  <ol>
+    <li><b>Check your email.</b>
+      <span>Your licence key goes to the address you paid with — usually within
+      a few hours. It is sent by hand, so it is not instant.</span></li>
+    <li><b>Download the app</b> if you have not already.
+      <span><a href="https://github.com/Higangssh/portbutler-releases/releases/latest"
+      style="color:var(--accent)">Latest release</a> · macOS 13+ · notarized by Apple.</span></li>
+    <li><b>Paste the key in.</b>
+      <span>About → Enter licence. It unlocks immediately — no restart, and no
+      account to create.</span></li>
+  </ol>
+
+  <p class="note"><b>Nothing after a few hours?</b> Look in your spam folder
+    first, then write to
+    <a href="mailto:support@sshlab.dev">support@sshlab.dev</a> — the same person
+    who wrote the code reads it. Your trial keeps working in the meantime, and
+    your session list is never touched either way.</p>
+
+  <p class="foot"><a href="/">portbutler.sshlab.dev</a></p>
+</div>
