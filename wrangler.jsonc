@@ -6,6 +6,12 @@
   "compatibility_date": "2026-09-13",
   // 대시보드에서 손으로 붙인 것과 같은 도메인이다. 여기 적어 두면 배포할 때마다
   // 맞춰지므로, 대시보드에서 실수로 지워도 다음 배포가 되살린다.
+  // 주소는 커스텀 도메인 하나뿐이다. workers.dev 임시 주소를 같이 켜두면 같은
+  // 쪽이 주소 둘로 뜨고, 검색 엔진이 둘 다 담고, 링크가 두 갈래로 퍼진다.
+  // 적어두지 않으면 wrangler 가 매번 "기본값으로 끈다"고 경고한다 — 끄는 것이
+  // 맞으니 경고를 없애는 대신 뜻을 적는다.
+  "workers_dev": false,
+  "preview_urls": false,
   "routes": [
     { "pattern": "portbutler.sshlab.dev", "custom_domain": true }
   ],
