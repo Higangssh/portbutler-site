@@ -4,11 +4,17 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "portbutler-site",
   "compatibility_date": "2026-09-13",
+  // 대시보드에서 손으로 붙인 것과 같은 도메인이다. 여기 적어 두면 배포할 때마다
+  // 맞춰지므로, 대시보드에서 실수로 지워도 다음 배포가 되살린다.
+  "routes": [
+    { "pattern": "portbutler.sshlab.dev", "custom_domain": true }
+  ],
   "assets": {
     // **올릴 것만 이 폴더에 있다.** 루트를 가리키면 .git 과 설정 파일까지
     // 후보가 되고, 빠뜨리면 저장소가 통째로 공개된다.
     "directory": "./public",
-    // 없는 주소는 첫 화면으로 보낸다. 한 장짜리라 404 를 따로 둘 이유가 없다.
-    "not_found_handling": "single-page-application"
+    // 없는 주소는 404 다. single-page-application 으로 두면 오타 난 주소까지
+    // 첫 화면을 200 으로 돌려주고, 검색 엔진이 같은 쪽을 여러 주소로 담는다.
+    "not_found_handling": "404-page"
   }
 }
