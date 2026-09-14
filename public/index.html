@@ -92,6 +92,12 @@
        border:1px solid var(--line);background:var(--panel)}
   figcaption{font-size:13px;color:var(--faint);margin-top:11px;text-align:center}
 
+  /* 부팅 로그를 그대로 보여준다. 시리얼은 **그림 없이 글자만으로 설명이
+     끝나는** 드문 기능이다 — 줄 앞에 시각이 붙은 것을 보면 무엇인지 안다. */
+  pre{margin-top:24px;padding:18px 20px;border:1px solid var(--line);border-radius:12px;
+      background:#0b1013;overflow-x:auto;font:13px/1.7 var(--mono);color:var(--dim)}
+  pre b{color:var(--accent);font-weight:400}
+  pre i{font-style:normal;color:var(--ink)}
   /* ── 표 ── */
   table{width:100%;border-collapse:collapse;margin-top:22px;font-size:14.5px}
   th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;
@@ -139,6 +145,7 @@
     <nav>
       <a href="#speed">Speed</a>
       <a href="#why">Why it failed</a>
+      <a href="#serial">Serial</a>
       <a href="#tunnels">Tunnels</a>
       <a href="#fleet">Fleets</a>
       <a href="#pricing">Pricing</a>
@@ -184,6 +191,32 @@
     <tr><td class="me">Connected, no SSH greeting</td><td>That port is not SSH, or <code>sshd</code> is stuck</td></tr>
     <tr><td class="me">Something answered, not SSH</td><td>A web server may be sitting on that port</td></tr>
   </table>
+</div></section>
+
+<section id="serial"><div class="wrap">
+  <div class="eyebrow">The third one</div>
+  <h2>The board on your desk is in the same list.</h2>
+  <p>A USB-serial adapter shows up beside your servers, not in another app. Speed and framing
+    are picked when you connect, and <code>/dev/cu.*</code> is found for you — minus the two
+    every Mac has and nobody wants to see.</p>
+
+  <p><strong>Every line can carry the time it arrived.</strong> Watching a board boot is most
+    of what a serial port is for, and "which step is slow" is unanswerable without it:</p>
+
+<pre><b>[12:34:56.789]</b> Booting Linux on physical CPU 0x0
+<b>[12:34:56.812]</b> Linux version 6.6.31-v8+
+<b>[12:34:57.104]</b> Machine model: Raspberry Pi 5
+<b>[12:35:01.882]</b> <i>mmc0: error -110 whilst initialising SD card</i>
+<b>[12:35:04.377]</b> systemd[1]: Reached target Multi-User System</pre>
+
+  <p><strong>There are 4.8 seconds between the last two lines.</strong> That is the SD card
+    timing out and the kernel waiting for it — the single most useful fact in that log, and
+    it is invisible without the clock. Every other line looks the same either way.</p>
+
+  <p>Milliseconds, because a boot log throws several lines into the same second. A partial
+    line gets one stamp, not one per fragment — serial always arrives in pieces. And a
+    <code>\r</code> is not a new line, so a progress bar redrawing itself does not fill your
+    screen with clocks.</p>
 </div></section>
 
 <section id="tunnels"><div class="wrap">
