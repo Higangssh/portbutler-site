@@ -42,14 +42,14 @@
   header{padding:30px 0 0}
   /* 첫 화면은 가운데 정렬 — 형제 제품(homebutler.dev)과 같은 골격이다.
      마스코트가 제목 위에 크게 오고, 그 아래로 눈썹·제목·설명·단추가 내려간다. */
-  .hero{text-align:center;padding:26px 0 0;position:relative}
+  .hero{text-align:center;padding:10px 0 0;position:relative}
   .hero::before{content:"";position:absolute;left:50%;top:-40px;transform:translateX(-50%);
        width:620px;height:420px;pointer-events:none;
        background:radial-gradient(ellipse at center,#4fb3a51f,transparent 65%)}
-  .hero .mascot{width:104px;display:block;margin:0 auto 20px;position:relative}
+  .hero .mascot{width:88px;display:block;margin:0 auto 16px;position:relative}
   .hero .lede{margin-left:auto;margin-right:auto}
   .hero .cta{justify-content:center}
-  .brand{display:flex;align-items:center;gap:12px;margin-bottom:34px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
   .brand img{width:36px;height:36px}
   .brand b{font-size:17px;font-weight:700;letter-spacing:-.01em}
   .brand nav{margin-left:auto;display:flex;gap:22px;font-size:14px}
@@ -73,7 +73,7 @@
   /* **첫 화면 그림은 넓게 간다.** 맥 앱을 $29에 파는데 제일 좋은 자리에
      마스코트만 있고 앱이 접힌 아래에 있으면, 살지 말지를 앱을 못 본 채로
      정하게 된다. 사람은 맥 앱을 눈으로 산다. */
-  .shot{margin-top:44px}
+  .shot{margin-top:34px}
   @media(min-width:1060px){
     .shot{width:calc(100vw - 48px);max-width:1180px;
           margin-left:50%;transform:translateX(-50%)}
@@ -131,9 +131,9 @@
     <img class="mascot" src="images/mascot.png" alt="">
     <div class="eyebrow">macOS · SSH · SFTP · Serial</div>
     <h1>Three of them.<br><em>One window.</em></h1>
-    <p class="lede">You keep a terminal open, a file manager next to it, and a serial monitor
-      behind both — for the same machine. PortButler is the one window where a host is a tab,
-      its files are a pane, and the board on your desk is in the same list.</p>
+    <p class="lede">A terminal, a file manager and a serial monitor — three apps for one machine.
+      Here a host is a tab, its files are the pane beside it, and the board on your desk sits in
+      the same list as the servers.</p>
 
     <div class="cta">
       <a class="btn" href="https://github.com/Higangssh/portbutler-releases/releases/latest">↓ Try it free for 14 days</a>
