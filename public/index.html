@@ -7,7 +7,7 @@
 <meta name="description" content="One window for SSH, SFTP and serial on macOS. Measurably faster file transfer, error messages that say what to check, and an auth policy that will not lock you out. $29 one-time.">
 <link rel="icon" href="images/icon.png">
 <meta property="og:title" content="PortButler — Native SSH, SFTP and serial for macOS">
-<meta property="og:description" content="One window for SSH, SFTP and serial. 108 MB/s where scp gets 74. $29 one-time.">
+<meta property="og:description" content="One window for SSH, SFTP and serial — and the USB adapter on your desk. Free for 14 days, $29 once. No account, no subscription.">
 <meta property="og:image" content="https://portbutler.sshlab.dev/images/hero.png">
 <meta property="og:url" content="https://portbutler.sshlab.dev/">
 <meta name="twitter:card" content="summary_large_image">
@@ -46,7 +46,7 @@
   .hero::before{content:"";position:absolute;left:50%;top:-40px;transform:translateX(-50%);
        width:620px;height:420px;pointer-events:none;
        background:radial-gradient(ellipse at center,#4fb3a51f,transparent 65%)}
-  .hero .mascot{width:186px;display:block;margin:0 auto 26px;position:relative}
+  .hero .mascot{width:104px;display:block;margin:0 auto 20px;position:relative}
   .hero .lede{margin-left:auto;margin-right:auto}
   .hero .cta{justify-content:center}
   .brand{display:flex;align-items:center;gap:12px;margin-bottom:34px}
@@ -70,6 +70,14 @@
        font-size:14px;color:var(--dim);max-width:620px;margin-left:auto;margin-right:auto}
   .support a{color:var(--accent)}
 
+  /* **첫 화면 그림은 넓게 간다.** 맥 앱을 $29에 파는데 제일 좋은 자리에
+     마스코트만 있고 앱이 접힌 아래에 있으면, 살지 말지를 앱을 못 본 채로
+     정하게 된다. 사람은 맥 앱을 눈으로 산다. */
+  .shot{margin-top:44px}
+  @media(min-width:1060px){
+    .shot{width:calc(100vw - 48px);max-width:1180px;
+          margin-left:50%;transform:translateX(-50%)}
+  }
   /* ── 그림·영상 자리 ── */
   figure{margin:34px 0 0}
   figure img,figure video{width:100%;display:block;border-radius:12px;
@@ -111,6 +119,7 @@
     <nav>
       <a href="#speed">Speed</a>
       <a href="#why">Why it failed</a>
+      <a href="#tunnels">Tunnels</a>
       <a href="#fleet">Fleets</a>
       <a href="#pricing">Pricing</a>
       <a class="star" href="https://github.com/Higangssh/portbutler-releases"
@@ -122,24 +131,61 @@
     <img class="mascot" src="images/mascot.png" alt="">
     <div class="eyebrow">macOS · SSH · SFTP · Serial</div>
     <h1>Three of them.<br><em>One window.</em></h1>
-    <p class="lede">Most SSH clients make you choose: a terminal that cannot move files, or a
-      file manager that cannot give you a shell. And none of them speak to the USB-serial
-      adapter on your desk.</p>
+    <p class="lede">You keep a terminal open, a file manager next to it, and a serial monitor
+      behind both — for the same machine. PortButler is the one window where a host is a tab,
+      its files are a pane, and the board on your desk is in the same list.</p>
 
     <div class="cta">
-      <a class="btn" href="https://github.com/Higangssh/portbutler-releases/releases/latest">↓ Download</a>
-      <a class="btn ghost" href="https://buy.polar.sh/polar_cl_4mYTJiLTIaCf0evHlowBRXriGMT2doIQmfZL30FOvhW">Buy · $29 one-time</a>
+      <a class="btn" href="https://github.com/Higangssh/portbutler-releases/releases/latest">↓ Try it free for 14 days</a>
+      <a class="btn ghost" href="#pricing">$29 once, if you keep it</a>
     </div>
-    <div class="meta">macOS 13+ · Apple silicon and Intel · Notarized by Apple · Not on the Mac App Store</div>
+    <div class="meta">No account, no card, nothing to enter · macOS 13+ · Apple silicon and Intel · Notarized by Apple</div>
   </div>
 
-  <figure>
+  <figure class="shot">
     <img src="images/hero.png" alt="Sessions, two file panes and a terminal in one PortButler window">
-    <figcaption>Pick a host on the left and it opens as a tab in this window.
-      Five machines means five tabs — not five windows.</figcaption>
+    <figcaption>One window. Hosts on the left, their files in the middle, a shell on the right —
+      and the serial adapter sits in the same list as the servers.</figcaption>
   </figure>
 </header>
 </div>
+
+<section id="why"><div class="wrap">
+  <div class="eyebrow">When it goes wrong</div>
+  <h2>It tells you <em style="font-style:italic;color:var(--accent)">why</em> it failed.</h2>
+  <p><code>connection failed</code> is not an error message. These five look identical on most
+    clients and each needs a completely different fix.</p>
+
+  <table>
+    <tr><th style="width:34%">What happened</th><th>What PortButler tells you</th></tr>
+    <tr><td class="me">The port refused it</td><td>The machine is up. Check the port — many devices use 2222</td></tr>
+    <tr><td class="me">Nothing answered</td><td>Powered off, or a firewall dropping packets silently</td></tr>
+    <tr><td class="me">The name will not resolve</td><td>Check spelling, or whether it only exists on a VPN</td></tr>
+    <tr><td class="me">Connected, no SSH greeting</td><td>That port is not SSH, or <code>sshd</code> is stuck</td></tr>
+    <tr><td class="me">Something answered, not SSH</td><td>A web server may be sitting on that port</td></tr>
+  </table>
+</div></section>
+
+<section id="tunnels"><div class="wrap">
+  <div class="eyebrow">New in 0.4</div>
+  <h2>A tunnel is a session, not a side effect.</h2>
+  <p>Everywhere else a port forward is a checkbox on a host, so it dies when you close the
+    terminal it was riding on. Here it is its own thing in the list, next to your servers.
+    <strong>Open a port for the afternoon with no terminal attached.</strong></p>
+  <p>It does not ask you for the address, the account or the key a second time — it points at
+    a host you already saved. Change that password next month and the tunnel follows.</p>
+  <table>
+    <tr><th>State</th><th>Local port</th><th>Goes to</th><th>Open now</th><th>Moved</th></tr>
+    <tr><td class="win">open</td><td class="num">5163</td><td class="num">workstation:5163</td>
+        <td class="num">2</td><td class="num">3.2 MB</td></tr>
+    <tr><td class="no">blocked</td><td class="num">socks 1080</td><td>whatever connects</td>
+        <td class="num">—</td><td class="num">—</td></tr>
+  </table>
+  <p><strong>Watch the last column.</strong> A tunnel that is open and idle looks exactly like
+    one that is quietly broken — both are a green dot. Other clients show you that dot and
+    stop there. The bytes are how you tell the difference, and they are the reason this
+    screen exists.</p>
+</div></section>
 
 <section id="speed"><div class="wrap">
   <div class="eyebrow">Measured, not quoted</div>
@@ -167,23 +213,7 @@
     to win on that cable, which is why the same-machine column exists. Every number here was
     measured on one Mac, and the method is published —
     <a href="https://github.com/Higangssh/portbutler-releases/blob/main/docs/BENCHMARK.md"
-       style="color:var(--accent)">BENCHMARK</a> <em style="color:var(--faint)">(Korean)</em>.</p>
-</div></section>
-
-<section id="why"><div class="wrap">
-  <div class="eyebrow">When it goes wrong</div>
-  <h2>It tells you <em style="font-style:italic;color:var(--accent)">why</em> it failed.</h2>
-  <p><code>connection failed</code> is not an error message. These five look identical on most
-    clients and each needs a completely different fix.</p>
-
-  <table>
-    <tr><th style="width:34%">What happened</th><th>What PortButler tells you</th></tr>
-    <tr><td class="me">The port refused it</td><td>The machine is up. Check the port — many devices use 2222</td></tr>
-    <tr><td class="me">Nothing answered</td><td>Powered off, or a firewall dropping packets silently</td></tr>
-    <tr><td class="me">The name will not resolve</td><td>Check spelling, or whether it only exists on a VPN</td></tr>
-    <tr><td class="me">Connected, no SSH greeting</td><td>That port is not SSH, or <code>sshd</code> is stuck</td></tr>
-    <tr><td class="me">Something answered, not SSH</td><td>A web server may be sitting on that port</td></tr>
-  </table>
+       style="color:var(--accent)">BENCHMARK</a>, in English, with the commands.</p>
 </div></section>
 
 <section id="fleet"><div class="wrap">
@@ -227,7 +257,14 @@
     <tr><td class="me">Same input to many sessions</td><td class="no">Not yet</td><td>SecureCRT, iTerm</td></tr>
     <tr><td class="me">Split panes</td><td class="no">Tabs only</td><td>iTerm, WindTerm</td></tr>
     <tr><td class="me">Serial in the same window</td><td class="win">Yes</td><td class="no">No SSH client does this</td></tr>
+    <tr><td class="me">Tunnel that outlives the terminal</td><td class="win">Yes</td><td>Termius too</td></tr>
+    <tr><td class="me">Live throughput on that tunnel</td><td class="win">Yes</td><td class="no">Nobody else shows it</td></tr>
   </table>
+
+  <p><strong>Nothing on that list is a surprise waiting for you.</strong> The first three are
+    being built, in that order. Everything else here is what you get today, and you have
+    fourteen days to find out whether the gaps matter for your work — before any money
+    changes hands.</p>
 
   <p>It reads <code>~/.ssh/known_hosts</code> and uses <code>ssh-agent</code> and the keys you
     already have. It imports <code>~/.ssh/config</code> when you ask it to, and
@@ -247,8 +284,8 @@
   <div class="cta" style="justify-content:center">
     <!-- 결제는 Polar(Merchant of Record)가 받는다. 같은 주소가 공개 README 와
          apple/branding.env 에도 들어가 있다 — 세 곳이 한 곳을 가리켜야 한다. -->
-    <a class="btn" href="https://buy.polar.sh/polar_cl_4mYTJiLTIaCf0evHlowBRXriGMT2doIQmfZL30FOvhW">Buy · $29</a>
-    <a class="btn ghost" href="https://github.com/Higangssh/portbutler-releases/releases/latest">↓ Download &amp; try free</a>
+    <a class="btn" href="https://github.com/Higangssh/portbutler-releases/releases/latest">↓ Download &amp; try free</a>
+    <a class="btn ghost" href="https://buy.polar.sh/polar_cl_4mYTJiLTIaCf0evHlowBRXriGMT2doIQmfZL30FOvhW">Buy · $29</a>
   </div>
   <div class="meta">macOS 13+ · Apple silicon and Intel · Notarized · Direct download, not the Mac App Store</div>
 
