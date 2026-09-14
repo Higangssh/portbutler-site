@@ -222,6 +222,19 @@
     <tr><td>sftp</td><td class="num">74 MB/s</td><td class="num">267 MB/s</td></tr>
   </table>
 
+  <p><strong>And when a big one dies at 90%, it picks up from there.</strong> A dropped
+    Wi-Fi or a closed lid leaves a marked partial file, and the next attempt asks whether to
+    resume it — never silently, in either direction. Parallel transfers make this harder than
+    it sounds: four streams write to different offsets, so an interrupted piece has holes in
+    it. Resuming from the file's size would append past those zeroed gaps and hand you a
+    corrupt image. PortButler keeps only the part that is genuinely there.</p>
+
+  <p>And if the app is killed outright, the leftover piece is <strong>not trusted at
+    all</strong> — nothing recorded how far it actually got, so the next attempt starts over
+    rather than guess. You lose the progress, not the file. On a firmware image that is the
+    only acceptable trade: a download that has to start again is an annoyance, and one that
+    silently completes wrong is a brick.</p>
+
   <p><strong>The number is on screen while it runs.</strong> Megabytes per second and the time
     left, in the same units as the table — so you are not asked to take this page's word for it.</p>
 
