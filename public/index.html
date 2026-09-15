@@ -254,6 +254,32 @@
     screen with clocks.</p>
 </div></section>
 
+<section id="memory"><div class="wrap">
+  <div class="eyebrow">Nobody else does this</div>
+  <h2>A switch console has no history. So the terminal keeps it.</h2>
+  <p>No up-arrow. No completion. No <code>~/.bash_history</code>. A switch or a bootloader
+    console has none of it, because there is no shell there to provide it — and so an engineer
+    types <code>show interface gigabitethernet 0/1</code> by hand, forty times a day.</p>
+
+  <p>PortButler remembers the lines you have typed on that port and offers the rest of one in
+    grey, in front of the cursor. <strong>→ accepts it. Nothing else changes</strong> — with no
+    suggestion showing, → is just → and goes to the device like any other key. It switches
+    itself off inside <code>vim</code> and <code>less</code>, where a phantom character would
+    be worse than useless.</p>
+
+  <p>This is not a shell plugin like <code>zsh-autosuggestions</code>, and it is not the same
+    thing. Those run <em>inside</em> the shell and work because the shell knows its own
+    history. <strong>On a serial console there is no shell to put a plugin in.</strong> Over
+    SSH you do not need us for this — the shell you land in already does it, and better.</p>
+
+  <p><strong>Passwords are never remembered, and two separate rules make sure of it.</strong>
+    A password prompt is caught because the console stops echoing what you type. But
+    <code>snmp-server community S3cr3t</code> <em>is</em> echoed — it looks like an ordinary
+    command — so a second rule cuts the line at the word the secret follows. One rule alone
+    would leak; that is why there are two. You can switch the memory off per port, and clear
+    what it holds.</p>
+</div></section>
+
 <section id="tunnels"><div class="wrap">
   <div class="eyebrow">New</div>
   <h2>A tunnel is a session, not a side effect.</h2>
