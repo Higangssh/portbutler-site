@@ -213,6 +213,21 @@
     timing out and the kernel waiting for it — the single most useful fact in that log, and
     it is invisible without the clock. Every other line looks the same either way.</p>
 
+  <p><strong>Send a file to the board — and be told when it is not listening.</strong>
+    Drag a firmware image in and it goes, over XMODEM, XMODEM-1K, YMODEM or ZMODEM. The half
+    other tools leave out is that <em>the device has to be waiting for it</em>, and when it is
+    not, most of them simply time out and leave you suspecting the cable. This pane tells you
+    the command to type on the device first — the one that matches both the protocol and the
+    kind of device you picked.</p>
+
+  <p><strong>And a pasted config block arrives whole.</strong> A switch at 9600 with no flow
+    control drops whatever overruns its input buffer, silently: half your configuration goes
+    in, the device says nothing, and you find out later from behaviour rather than from an
+    error. PortButler can pace the paste, per line or per character. <strong>Your bytes are
+    not touched</strong> — no <code>\n</code> → <code>\r</code> rewriting, same order — so
+    with the delay at zero the device receives exactly what it received before. Saved
+    snippets go out through the same paced path, so a long block never arrives half-eaten.</p>
+
   <p>Milliseconds, because a boot log throws several lines into the same second. A partial
     line gets one stamp, not one per fragment — serial always arrives in pieces. And a
     <code>\r</code> is not a new line, so a progress bar redrawing itself does not fill your
@@ -318,16 +333,16 @@
 
   <table>
     <tr><th style="width:40%"></th><th>PortButler</th><th>Where it exists</th></tr>
-    <tr><td class="me">Saved command snippets</td><td class="no">Not yet</td><td>Termius, WindTerm</td></tr>
     <tr><td class="me">Folder transfer and a queue</td><td class="no">Not yet</td><td>Transmit, ForkLift</td></tr>
     <tr><td class="me">Same input to many sessions</td><td class="no">Not yet</td><td>SecureCRT, iTerm</td></tr>
     <tr><td class="me">Split panes</td><td class="no">Tabs only</td><td>iTerm, WindTerm</td></tr>
     <tr><td class="me">Serial in the same window</td><td class="win">Yes</td><td>WindTerm, Termius</td></tr>
     <tr><td class="me">Tunnel that outlives the terminal</td><td class="win">Yes</td><td>Termius too</td></tr>
     <tr><td class="me">Live throughput on that tunnel</td><td class="win">Yes</td><td class="no">Nobody else shows it</td></tr>
+    <tr><td class="me">Saved command snippets</td><td class="win">Yes</td><td>Termius, WindTerm</td></tr>
   </table>
 
-  <p><strong>Nothing on that list is a surprise waiting for you.</strong> The first three are
+  <p><strong>Nothing on that list is a surprise waiting for you.</strong> The first two are
     being built, in that order. Everything else here is what you get today, and you have
     fourteen days to find out whether the gaps matter for your work — before any money
     changes hands.</p>
