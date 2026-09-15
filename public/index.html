@@ -306,6 +306,12 @@ sha256sum firmware      <b>← compared with the value measured on the Mac</b></
     a console reads as Ctrl-C and XOFF rather than as data. Base64 uses only 64 harmless
     characters, so a <code>.tar.gz</code> or a <code>.bin</code> goes through intact.</p>
 
+  <figure>
+    <img src="images/feat-text.png" alt="A file being sent to a device over serial as base64, with the hash verified on arrival">
+    <figcaption>Nothing was installed on that device, and nothing was typed on it.
+      The app wrote every one of those lines, then compared the hash.</figcaption>
+  </figure>
+
   <p><strong>The hash check cannot be switched off.</strong> A device without flow control
     drops whatever overruns its buffer and says nothing, which leaves a file of exactly the
     right length with the wrong bytes inside. On firmware that is a brick.</p>
