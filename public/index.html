@@ -220,6 +220,26 @@
     the command to type on the device first — the one that matches both the protocol and the
     kind of device you picked.</p>
 
+  <p><strong>And when the board has no receiver at all, it still works.</strong> The first
+    real board we plugged into ran a Yocto image: no <code>lrzsz</code>, and no package
+    manager to install one — <code>apt</code>, <code>opkg</code>, <code>dnf</code>, none of
+    them. Adding a receiver meant reflashing the device. So all that XMODEM work was, on that
+    board, unusable.</p>
+
+  <p>So there is a second path that installs nothing. It needs <code>base64</code> and
+    <code>sha256sum</code>, which are on essentially every Linux, and it types the five steps
+    for you — open a file on the device, paste the encoded bytes, close it, decode it, and
+    compare the hash against the one measured here. <strong>The hash check cannot be turned
+    off.</strong> A device without flow control drops what overruns its buffer, and that
+    leaves a file of exactly the right length with the wrong contents inside. On firmware,
+    that is a brick.</p>
+
+  <p>It carries anything — a <code>.tar.gz</code>, a firmware image — because encoding is
+    what makes it safe: compressed data always contains bytes like <code>0x03</code> and
+    <code>0x11</code>, which a console reads as Ctrl-C and XOFF rather than as data.
+    <strong>Expect about 8 KB/s at 115200.</strong> That is generous for a config or a log
+    and wrong for a root filesystem, and you should know which you have before you start.</p>
+
   <p><strong>And a pasted config block arrives whole.</strong> A switch at 9600 with no flow
     control drops whatever overruns its input buffer, silently: half your configuration goes
     in, the device says nothing, and you find out later from behaviour rather than from an
