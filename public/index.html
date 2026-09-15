@@ -237,8 +237,10 @@
   <p>It carries anything — a <code>.tar.gz</code>, a firmware image — because encoding is
     what makes it safe: compressed data always contains bytes like <code>0x03</code> and
     <code>0x11</code>, which a console reads as Ctrl-C and XOFF rather than as data.
-    <strong>Expect about 8 KB/s at 115200.</strong> That is generous for a config or a log
-    and wrong for a root filesystem, and you should know which you have before you start.</p>
+    <strong>Around 8 KB/s at 115200</strong> — that is arithmetic from the line rate and
+    base64's one-third overhead, not a figure measured on a bench. Either way the shape is
+    right: generous for a config or a log, wrong for a root filesystem, and worth knowing
+    which one you have before you start.</p>
 
   <p><strong>And a pasted config block arrives whole.</strong> A switch at 9600 with no flow
     control drops whatever overruns its input buffer, silently: half your configuration goes
