@@ -271,13 +271,23 @@
     that <em>the box has no network</em>. When that is true, the console is the only way out
     for a log, a config backup, or a crash dump.</p>
 
-  <h3 style="margin-top:34px">The green dot, and why you can press Send first</h3>
-  <p>In XMODEM and YMODEM <strong>the receiver speaks first.</strong> It sends the letter
-    <code>C</code> over and over, meaning <em>ready</em>, and the sender writes nothing at all
-    until it sees one. PortButler watches your screen for that <code>C</code> and lights the
-    dot when it appears.</p>
-  <p>So the order does not matter. Press Send before you have typed <code>rb</code> and it
-    simply waits — <strong>nothing is dumped into your console while it does.</strong></p>
+  <h3 style="margin-top:34px">Who speaks first — it depends on the method</h3>
+  <p>The three behave differently here, and it changes what you do:</p>
+
+  <p><strong>XMODEM and YMODEM — the device speaks first.</strong> It sends the letter
+    <code>C</code> over and over, meaning <em>ready</em>, and our end writes
+    <strong>nothing at all</strong> until it sees one. So press Send whenever you like: it
+    waits, and nothing is dumped into your console while it does. The green dot lights when
+    that <code>C</code> arrives.</p>
+
+  <p><strong>ZMODEM — we speak first.</strong> Press Send and the app types
+    <code>rz</code> on the device for you, then begins. <strong>The device still needs
+    <code>lrzsz</code> installed</strong> — if it is not there you will see
+    <code>-sh: rz: command not found</code> and a burst of garbage, which is the receiver
+    talking to nobody.</p>
+
+  <p><strong>Text — nobody needs to speak first</strong>, because there is no convention to
+    agree on. The app types every line itself.</p>
 
   <h3 style="margin-top:34px">When the device has none of it</h3>
   <p>This is the one that is ours. The app turns the file into base64 text and types five
