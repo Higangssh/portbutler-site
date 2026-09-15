@@ -151,6 +151,7 @@
       <a href="#serial">Serial</a>
       <a href="#tunnels">Tunnels</a>
       <a href="#fleet">Fleets</a>
+      <a href="#ahead">Ahead</a>
       <a href="#pricing">Pricing</a>
       <a class="star" href="https://github.com/Higangssh/portbutler-releases"
          target="_blank" rel="noopener">★ Star</a>
@@ -469,6 +470,41 @@ sha256sum firmware      <b>← compared with the value measured on the Mac</b></
   <p>It reads <code>~/.ssh/known_hosts</code> and uses <code>ssh-agent</code> and the keys you
     already have. It imports <code>~/.ssh/config</code> when you ask it to, and
     <strong>never writes to that file</strong>.</p>
+</div></section>
+
+<section id="ahead"><div class="wrap">
+  <div class="eyebrow">Where this is going</div>
+  <h2>Three things that will not change.</h2>
+  <p><strong>No account.</strong> There is nothing to sign in to, so there is nothing to lock
+    you out of. <strong>No telemetry.</strong> <strong>And your keys stay on this Mac</strong>
+    — not as a policy we could revise, but because we run no server for them to go to. When
+    a competitor moves your keys to their cloud on the paid tier, that is a thing we
+    structurally cannot do.</p>
+  <p>You pay once. If we stop, the copy you have keeps working — it is a signed app on your
+    disk, not a licence server that has to answer.</p>
+
+  <h3 style="margin-top:38px">Next: the cable carries more than text</h3>
+  <p>The same RS-485 pair you are reading a console on is usually carrying Modbus frames the
+    rest of the day. Today that means two apps — and <strong>a serial port admits only one at
+    a time</strong>, so you close one to open the other, and close it again to get back. We
+    are putting the decoder in the window you are already in: a view mode beside hex, not a
+    second application. It listens by default. Writing to a live bus is something you turn
+    on deliberately.</p>
+
+  <h3 style="margin-top:34px">And then: agents get hands, but not a free hand</h3>
+  <p>Terminals are growing AI that runs commands for you. We are not going to do that, and we
+    said so before it was a crowd: <strong>a command that runs on production hardware without
+    someone reading it first is how you lose an afternoon or a factory.</strong></p>
+  <p>What we will do is the other half. PortButler already holds the connection, knows whether
+    it is talking to a bootloader or an OS, cuts secrets out of what it remembers, and refuses
+    to rename a file it has not verified. An agent has none of that and needs all of it. So
+    the agent gets to reach your board through us — and you get to watch, and press the
+    button.</p>
+  <p><strong>Your agent can reach the board. It still cannot touch it without you.</strong></p>
+
+  <p style="margin-top:30px;font-size:14.5px"><em>No dates on any of this.</em> A date on a
+    roadmap is a promise, and the only promises on this page are the ones about what the app
+    does today.</p>
 </div></section>
 
 <section id="pricing" class="center"><div class="wrap">
