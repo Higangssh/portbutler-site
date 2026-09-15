@@ -98,6 +98,9 @@
       background:#0b1013;overflow-x:auto;font:13px/1.7 var(--mono);color:var(--dim)}
   pre b{color:var(--accent);font-weight:400}
   pre i{font-style:normal;color:var(--ink)}
+  h3{font-size:18px;font-weight:650;letter-spacing:-.01em}
+  .note-inline{padding:16px 18px;border:1px solid var(--line);border-radius:10px;
+       background:var(--panel);font-size:14.5px;margin-top:26px}
   /* ── 표 ── */
   table{width:100%;border-collapse:collapse;margin-top:22px;font-size:14.5px}
   th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;
@@ -213,35 +216,6 @@
     timing out and the kernel waiting for it — the single most useful fact in that log, and
     it is invisible without the clock. Every other line looks the same either way.</p>
 
-  <p><strong>Send a file to the board — and be told when it is not listening.</strong>
-    Drag a firmware image in and it goes, over XMODEM, XMODEM-1K, YMODEM or ZMODEM. The half
-    other tools leave out is that <em>the device has to be waiting for it</em>, and when it is
-    not, most of them simply time out and leave you suspecting the cable. This pane tells you
-    the command to type on the device first — the one that matches both the protocol and the
-    kind of device you picked.</p>
-
-  <p><strong>And when the board has no receiver at all, it still works.</strong> The first
-    real board we plugged into ran a Yocto image: no <code>lrzsz</code>, and no package
-    manager to install one — <code>apt</code>, <code>opkg</code>, <code>dnf</code>, none of
-    them. Adding a receiver meant reflashing the device. So all that XMODEM work was, on that
-    board, unusable.</p>
-
-  <p>So there is a second path that installs nothing. It needs <code>base64</code> and
-    <code>sha256sum</code>, which are on essentially every Linux, and it types the five steps
-    for you — open a file on the device, paste the encoded bytes, close it, decode it, and
-    compare the hash against the one measured here. <strong>The hash check cannot be turned
-    off.</strong> A device without flow control drops what overruns its buffer, and that
-    leaves a file of exactly the right length with the wrong contents inside. On firmware,
-    that is a brick.</p>
-
-  <p>It carries anything — a <code>.tar.gz</code>, a firmware image — because encoding is
-    what makes it safe: compressed data always contains bytes like <code>0x03</code> and
-    <code>0x11</code>, which a console reads as Ctrl-C and XOFF rather than as data.
-    <strong>Around 8 KB/s at 115200</strong> — that is arithmetic from the line rate and
-    base64's one-third overhead, not a figure measured on a bench. Either way the shape is
-    right: generous for a config or a log, wrong for a root filesystem, and worth knowing
-    which one you have before you start.</p>
-
   <p><strong>And a pasted config block arrives whole.</strong> A switch at 9600 with no flow
     control drops whatever overruns its input buffer, silently: half your configuration goes
     in, the device says nothing, and you find out later from behaviour rather than from an
@@ -254,6 +228,87 @@
     line gets one stamp, not one per fragment — serial always arrives in pieces. And a
     <code>\r</code> is not a new line, so a progress bar redrawing itself does not fill your
     screen with clocks.</p>
+</div></section>
+
+<section id="files-over-serial"><div class="wrap">
+  <div class="eyebrow">Files down a console cable</div>
+  <h2>A serial line has no idea what a file is.</h2>
+  <p>It is a wire that carries bytes in a row. Nothing in it says <em>this is a file</em>,
+    <em>this is where it ends</em>, or <em>I got that</em>. To move a file, both ends have to
+    agree on a convention beforehand — and <strong>both ends have to know it.</strong> We know
+    all of them. The question is always what is on the far side.</p>
+
+  <table>
+    <tr><th>Method</th><th>Needs on the device</th><th>You type there</th><th>When</th></tr>
+    <tr><td class="me">XMODEM</td><td><code>lrzsz</code></td><td class="num">rx</td>
+        <td>Very old equipment. 128-byte blocks</td></tr>
+    <tr><td class="me">XMODEM-1K</td><td><code>lrzsz</code></td><td class="num">rx</td>
+        <td>The same, eight times fewer round trips</td></tr>
+    <tr><td class="me">YMODEM</td><td><code>lrzsz</code> <em>or</em> U-Boot</td><td class="num">rb</td>
+        <td>Carries the name and size. U-Boot calls it <code>loady</code></td></tr>
+    <tr><td class="me">ZMODEM</td><td><code>lrzsz</code></td><td class="num">rz</td>
+        <td>Fastest on Linux. U-Boot cannot do it</td></tr>
+    <tr><td class="me">Text</td><td class="win">nothing</td><td class="win">nothing</td>
+        <td>When none of the above is available</td></tr>
+  </table>
+
+  <p><code>lrzsz</code> is the package that teaches a Linux box those conventions. The names
+    follow a rule worth knowing: <strong><code>r</code> receives and <code>s</code> sends</strong>,
+    and the last letter is the method — <code>b</code> for YMODEM, <code>z</code> for ZMODEM,
+    <code>x</code> for XMODEM. Once you see that, you can pick the command yourself.</p>
+
+  <h3 style="margin-top:34px">Which way, and where it lands</h3>
+  <table>
+    <tr><th></th><th>Direction</th><th>Where the file ends up</th></tr>
+    <tr><td class="me">Send</td><td>Mac → device</td>
+        <td>The device's current directory — no path is attached</td></tr>
+    <tr><td class="me">Receive</td><td>device → Mac</td>
+        <td>It asks. The default is Settings ▸ Files ▸ download location</td></tr>
+  </table>
+
+  <p><strong>Yes, you can pull files back.</strong> The cable has a TX and an RX wire, so it
+    goes both ways — and the reason you are on a console cable in the first place is usually
+    that <em>the box has no network</em>. When that is true, the console is the only way out
+    for a log, a config backup, or a crash dump.</p>
+
+  <h3 style="margin-top:34px">The green dot, and why you can press Send first</h3>
+  <p>In XMODEM and YMODEM <strong>the receiver speaks first.</strong> It sends the letter
+    <code>C</code> over and over, meaning <em>ready</em>, and the sender writes nothing at all
+    until it sees one. PortButler watches your screen for that <code>C</code> and lights the
+    dot when it appears.</p>
+  <p>So the order does not matter. Press Send before you have typed <code>rb</code> and it
+    simply waits — <strong>nothing is dumped into your console while it does.</strong></p>
+
+  <h3 style="margin-top:34px">When the device has none of it</h3>
+  <p>This is the one that is ours. The app turns the file into base64 text and types five
+    lines for you — open a file on the device, paste the encoded bytes, close it, decode it,
+    and compare the hash against the one measured here:</p>
+
+<pre>cat &gt; /tmp/firmware.b64
+<b>…base64 text…</b>
+<b>^D</b>
+base64 -d /tmp/firmware.b64 &gt; firmware &amp;&amp; rm /tmp/firmware.b64
+sha256sum firmware      <b>← compared with the value measured on the Mac</b></pre>
+
+  <p><strong>It needs only <code>base64</code> and <code>sha256sum</code></strong>, which are
+    on essentially every Linux. The encoding is what makes it safe for real files: compressed
+    data and firmware always contain bytes like <code>0x03</code> and <code>0x11</code>, which
+    a console reads as Ctrl-C and XOFF rather than as data. Base64 uses only 64 harmless
+    characters, so a <code>.tar.gz</code> or a <code>.bin</code> goes through intact.</p>
+
+  <p><strong>The hash check cannot be switched off.</strong> A device without flow control
+    drops whatever overruns its buffer and says nothing, which leaves a file of exactly the
+    right length with the wrong bytes inside. On firmware that is a brick.</p>
+
+  <p><strong>Around 8 KB/s at 115200 — roughly two minutes per megabyte.</strong> That is
+    arithmetic from the line rate and base64's one-third overhead, not a bench measurement.
+    Either way the shape is right: generous for a log, a config or a small firmware image,
+    and wrong for a root filesystem. Worth knowing before you start rather than after.</p>
+
+  <p class="note-inline"><strong>One thing to know:</strong> pressing a key during a paste or a
+    text transfer stops it. That is deliberate — it keeps a stray keystroke from landing in
+    the middle of a config line — but on a transfer that runs for minutes, one accidental key
+    ends it, and a partial file is left on the device. The app tells you when that happens.</p>
 </div></section>
 
 <section id="memory"><div class="wrap">
