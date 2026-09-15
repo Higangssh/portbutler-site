@@ -51,8 +51,11 @@
   /* 첫 화면은 가운데 정렬 — 형제 제품(homebutler.dev)과 같은 골격이다.
      마스코트가 제목 위에 크게 오고, 그 아래로 눈썹·제목·설명·단추가 내려간다. */
   .hero{text-align:center;padding:10px 0 0;position:relative}
+  /* **폭을 화면보다 크게 두면 안 된다.** 620px 짜리를 가운데 두면 500px 폰에서
+     양옆으로 60px 씩 삐져나가고, 눈에 안 보이는 빛번짐 때문에 **쪽 전체가 가로로
+     스크롤된다.** 요소가 아니라 가상 요소라 검사에도 안 잡혔다. */
   .hero::before{content:"";position:absolute;left:50%;top:-40px;transform:translateX(-50%);
-       width:620px;height:420px;pointer-events:none;
+       width:min(620px,100%);height:420px;pointer-events:none;
        background:radial-gradient(ellipse at center,#4fb3a51f,transparent 65%)}
   .hero .mascot{width:88px;display:block;margin:0 auto 16px;position:relative}
   .hero .lede{margin-left:auto;margin-right:auto}
