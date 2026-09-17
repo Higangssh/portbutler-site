@@ -355,6 +355,18 @@ sha256sum firmware      <b>← compared with the value measured on the Mac</b></
     Over SSH you may not need it: the shell you land in often does this already, and better.
     That is why you can switch it off for a host.</p>
 
+  <p><strong>Tab stays with the device, on purpose.</strong> Every inline-suggestion tool
+    works this way — <code>zsh-autosuggestions</code>, <code>fish</code>, Warp, Amazon Q all
+    accept with → and leave Tab to completion, and Warp's own documentation admits that
+    binding Tab to suggestions means moving the completion menu somewhere else. We could not
+    make that trade even if we wanted to: the Tab we would be taking is not ours, it belongs
+    to your Cisco IOS, your U-Boot, your bash.</p>
+
+  <p>And the two are not the same thing. <strong>We only know what you typed before. Tab
+    knows what is there now</strong> — the file you made five minutes ago, the branch you
+    just created, the directory that exists only on that box. Taking Tab would trade the
+    better one for the worse one.</p>
+
   <p><strong>Passwords are never remembered, and two separate rules make sure of it.</strong>
     A password prompt is caught because the console stops echoing what you type. But
     <code>snmp-server community S3cr3t</code> <em>is</em> echoed — it looks like an ordinary
