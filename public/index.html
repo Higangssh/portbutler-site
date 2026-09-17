@@ -332,7 +332,7 @@ sha256sum firmware      <b>← compared with the value measured on the Mac</b></
 </div></section>
 
 <section id="memory"><div class="wrap">
-  <div class="eyebrow">Nobody else does this</div>
+  <div class="eyebrow">Where the device forgets</div>
   <h2>A console forgets. The terminal does not.</h2>
   <p>Some consoles remember nothing at all — a bootloader, a bare MCU prompt, a stripped
     BusyBox build. Others remember a little and then throw it away: <strong>Cisco IOS keeps
@@ -354,6 +354,11 @@ sha256sum firmware      <b>← compared with the value measured on the Mac</b></
     it remembers is <strong>yours, on your Mac, per host, and still there next week.</strong>
     Over SSH you may not need it: the shell you land in often does this already, and better.
     That is why you can switch it off for a host.</p>
+
+  <p><strong>We have not found another terminal that does this on a serial port.</strong>
+    That is not the same as there being none — we looked, we did not survey. If you know one,
+    <a href="https://github.com/Higangssh/portbutler-releases/issues/new"
+       style="color:var(--accent)">tell us</a> and this paragraph changes.</p>
 
   <p><strong>Tab stays with the device, on purpose.</strong> Every inline-suggestion tool
     works this way — <code>zsh-autosuggestions</code>, <code>fish</code>, Warp, Amazon Q all
@@ -479,7 +484,7 @@ sha256sum firmware      <b>← compared with the value measured on the Mac</b></
     <tr><td class="me">Split panes</td><td class="no">Tabs only</td><td>iTerm, WindTerm</td></tr>
     <tr><td class="me">Serial in the same window</td><td class="win">Yes</td><td>WindTerm, Termius</td></tr>
     <tr><td class="me">Tunnel that outlives the terminal</td><td class="win">Yes</td><td>Termius too</td></tr>
-    <tr><td class="me">Live throughput on that tunnel</td><td class="win">Yes</td><td class="no">Nobody else shows it</td></tr>
+    <tr><td class="me">Live throughput on that tunnel</td><td class="win">Yes</td><td class="no">We could not find it elsewhere</td></tr>
     <tr><td class="me">Saved command snippets</td><td class="win">Yes</td><td>Termius, WindTerm</td></tr>
   </table>
 
